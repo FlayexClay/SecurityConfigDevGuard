@@ -1,0 +1,6 @@
+com\devguard\worker\analyzer\RedactionTest.class
+com\devguard\worker\analyzer\RemediationKeyTest.class
+com\devguard\worker\analyzer\SeveritiesTest.class
+com\devguard\worker\AbstractWorkerIntegrationTest.class
+com\devguard\worker\finding\FindingWriterTest.class
+com\devguard\worker\risk\RiskEngineTest.class

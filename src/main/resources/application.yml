@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: devguard-security-worker
+  main:
+    web-application-type: none
+    # Mantiene la JVM viva sin servidor web. Sin esto, si el consumidor de
+    # Kafka no se puede construir al arrancar (el broker aun no responde, DNS
+    # que todavia no resuelve), la JVM termina y el reintento programado nunca
+    # llega a ejecutarse.
+    keep-alive: true
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}?sslMode=${DB_SSL_MODE:disable}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    pool:
+      enabled: true
+      initial-size: 2
+      max-size: 8
+
+devguard:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+    consumer-group: ${KAFKA_CONSUMER_GROUP:devguard-security-worker}
+  worker:
+    # Un scan a la vez por defecto. Los analizadores reales son el mayor
+    # consumidor de memoria del stack.
+    max-concurrent-scans: ${WORKER_MAX_CONCURRENT_SCANS:1}
+    workspace: ${SCAN_WORKSPACE:/var/devguard/workspace}
+    simulated: ${WORKER_SIMULATED_ANALYZERS:true}
+    # Un repositorio mayor que esto se rechaza: llenaria el disco de la
+    # instancia y afectaria a todos los tenants.
+    max-repo-size-mb: ${WORKER_MAX_REPO_SIZE_MB:500}
+    trivy:
+      timeout-minutes: ${TRIVY_TIMEOUT_MINUTES:10}
+      cache-dir: ${TRIVY_CACHE_DIR:/var/devguard/trivy-cache}
+    sast:
+      enabled: ${DEVGUARD_SAST_ENABLED:true}
+      rules: ${SEMGREP_RULES:/opt/semgrep-rules}
+      timeout-minutes: ${SEMGREP_TIMEOUT_MINUTES:15}
+      # Los analizadores corren en secuencia, asi que mientras semgrep trabaja
+      # tiene la maquina para el. Con 2 vCPU, 2 procesos.
+      jobs: ${SEMGREP_JOBS:2}
+      # Acotar las reglas a los lenguajes detectados en el repositorio.
+      # false carga el arbol completo (medido: 470s frente a segundos).
+      scope-rules: ${SEMGREP_SCOPE_RULES:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    defaults:
+      enabled: true
+
+logging:
+  level:
+    com.devguard: ${LOG_LEVEL_APP:DEBUG}

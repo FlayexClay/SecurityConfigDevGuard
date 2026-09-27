@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.devguard.worker.risk.RiskEngineTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.187 s -- in com.devguard.worker.risk.RiskEngineTest

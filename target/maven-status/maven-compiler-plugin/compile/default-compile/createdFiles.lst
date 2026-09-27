@@ -1,0 +1,14 @@
+com\devguard\worker\risk\FindingSnapshot.class
+com\devguard\worker\analyzer\semgrep\LanguageDetector.class
+com\devguard\worker\risk\ScoreRepository.class
+com\devguard\worker\risk\ScoreResult$TopRisk.class
+com\devguard\worker\risk\RiskFactors.class
+com\devguard\worker\risk\ScoreResult$Counts.class
+com\devguard\worker\risk\ScoreService$Optional_.class
+com\devguard\worker\risk\ScoreResult.class
+com\devguard\worker\risk\ScoreService.class
+com\devguard\worker\analyzer\semgrep\LanguageDetector$1.class
+com\devguard\worker\risk\RiskEngine.class
+com\devguard\worker\analyzer\RemediationKey.class
+com\devguard\worker\analyzer\trivy\TrivyAnalyzers$3.class
+com\devguard\worker\risk\ScoreService$ScoreChangedEvent.class
